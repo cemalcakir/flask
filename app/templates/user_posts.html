@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content">
+    <h1>Posts by {{ user.username }} ({{ posts.total }})</h1>
+    {% for post in posts.items %}
+    <div class="question">
+        <h3><a class="main-links" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h3>
+        <small>{{ post.date_posted.strftime('%Y-%m-%D') }}</small>
+        <small><a
+                href="{{ url_for('user_posts', username=post.author.username) }}">{{ post.author.username }}</a></small>
+    </div>
+    <hr>
+    {% endfor %}
+    <div class="pagination">
+        {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=3, right_current=5) %}
+        {% if page_num %}
+        {% if posts.page == page_num %}
+        <a class="btn-paginate btn-active"
+            href="{{ url_for('user_posts', username=user.username, page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+        <a class="btn-paginate"
+            href="{{ url_for('user_posts', username=user.username, page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

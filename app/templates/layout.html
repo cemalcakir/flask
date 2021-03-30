@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% if title %}
+    <title>{{title}}</title>
+    {% else %}
+    <title>My Project</title>
+    {% endif %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="navbar-left">
+                <a href="{{ url_for('home') }}"><img src="{{url_for('static', filename='logo.png')}}" alt=""
+                        class="logo"></a>
+                <input type="text" class="searchbox" placeholder="Ara">
+            </div>
+            <div class="navbar-right">
+                <ul>
+                    {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('new_post') }}">Soru Sor</a></li>
+                    <li><a href="{{ url_for('profile') }}">Profil</a></li>
+                    <li><a href="{{ url_for('logout') }}">Çıkış</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('login') }}">Giriş</a></li>
+                    <li><a href="{{ url_for('register') }}">Kayıt Ol</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="sidenav">
+            <div class="topics">
+                <h3>Dersler</h3>
+                <ul>
+                    <li><a href="#">Matematik</a></li>
+                    <li><a href="#">Geometri</a></li>
+                    <li><a href="#">Fizik</a></li>
+                    <li><a href="#">Kimya</a></li>
+                </ul>
+            </div>
+        </div>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="footer-col">
+            <h1>Hakkımızda</h1>
+            <a href="#">Biz Kimiz?</a>
+            <a href="#">Yardım</a>
+        </div>
+        <div class="footer-col">
+            <h1>Bize Ulaşın</h1>
+            <a href="#">Öneri / Şikayet</a>
+        </div>
+        <div class="footer-col">
+            <h1>Sosyal Medya</h1>
+            <a href="#">Facebook</a>
+            <a href="#">Instagram</a>
+            <a href="#">Twitter</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>
